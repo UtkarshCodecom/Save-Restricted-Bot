@@ -151,10 +151,10 @@ def handle_private(message: pyrogram.types.messages_and_media.message.Message, c
 		msg_type = get_message_type(msg)
 
 		if "Text" == msg_type:
-			bot.send_message(message.chat.id, msg.text, entities=msg.entities, reply_to_message_id=message.id)
+			bot.send_message(message.chat.id, msg.text, entities=msg.entities, reply_to_message_id=None)
 			return
 
-		smsg = bot.send_message(message.chat.id, '__Downloading__', reply_to_message_id=message.id)
+		smsg = bot.send_message(message.chat.id, '__Downloading__', reply_to_message_id=None)
 		dosta = threading.Thread(target=lambda:downstatus(f'{message.id}downstatus.txt',smsg),daemon=True)
 		dosta.start()
 		file = acc.download_media(msg, progress=progress, progress_args=[message,"down"])
@@ -168,7 +168,7 @@ def handle_private(message: pyrogram.types.messages_and_media.message.Message, c
 				thumb = acc.download_media(msg.document.thumbs[0].file_id)
 			except: thumb = None
 			
-			bot.send_document(message.chat.id, file, thumb=thumb, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, progress=progress, progress_args=[message,"up"])
+			bot.send_document(message.chat.id, file, thumb=thumb, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=None, progress=progress, progress_args=[message,"up"])
 			if thumb != None: os.remove(thumb)
 
 		elif "Video" == msg_type:
@@ -176,28 +176,28 @@ def handle_private(message: pyrogram.types.messages_and_media.message.Message, c
 				thumb = acc.download_media(msg.video.thumbs[0].file_id)
 			except: thumb = None
 
-			bot.send_video(message.chat.id, file, duration=msg.video.duration, width=msg.video.width, height=msg.video.height, thumb=thumb, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, progress=progress, progress_args=[message,"up"])
+			bot.send_video(message.chat.id, file, duration=msg.video.duration, width=msg.video.width, height=msg.video.height, thumb=thumb, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=None, progress=progress, progress_args=[message,"up"])
 			if thumb != None: os.remove(thumb)
 
 		elif "Animation" == msg_type:
-			bot.send_animation(message.chat.id, file, reply_to_message_id=message.id)
+			bot.send_animation(message.chat.id, file, reply_to_message_id=None)
 			   
 		elif "Sticker" == msg_type:
-			bot.send_sticker(message.chat.id, file, reply_to_message_id=message.id)
+			bot.send_sticker(message.chat.id, file, reply_to_message_id=None)
 
 		elif "Voice" == msg_type:
-			bot.send_voice(message.chat.id, file, caption=msg.caption, thumb=thumb, caption_entities=msg.caption_entities, reply_to_message_id=message.id, progress=progress, progress_args=[message,"up"])
+			bot.send_voice(message.chat.id, file, caption=msg.caption, thumb=thumb, caption_entities=msg.caption_entities, reply_to_message_id=None, progress=progress, progress_args=[message,"up"])
 
 		elif "Audio" == msg_type:
 			try:
 				thumb = acc.download_media(msg.audio.thumbs[0].file_id)
 			except: thumb = None
 				
-			bot.send_audio(message.chat.id, file, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id, progress=progress, progress_args=[message,"up"])   
+			bot.send_audio(message.chat.id, file, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=None, progress=progress, progress_args=[message,"up"])   
 			if thumb != None: os.remove(thumb)
 
 		elif "Photo" == msg_type:
-			bot.send_photo(message.chat.id, file, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=message.id)
+			bot.send_photo(message.chat.id, file, caption=msg.caption, caption_entities=msg.caption_entities, reply_to_message_id=None)
 
 		os.remove(file)
 		if os.path.exists(f'{message.id}upstatus.txt'): os.remove(f'{message.id}upstatus.txt')
