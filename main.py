@@ -130,16 +130,16 @@ def save(client: pyrogram.client.Client, message: pyrogram.types.messages_and_me
 
 				try: msg  = bot.get_messages(username,msgid)
 				except UsernameNotOccupied: 
-					bot.send_message(message.chat.id,f"**The username is not occupied by anyone**", reply_to_message_id=message.id)
+					bot.send_message(message.chat.id,f"**The username is not occupied by anyone**", reply_to_message_id=None)
 					return
 
-				try: bot.copy_message(message.chat.id, msg.chat.id, msg.id,reply_to_message_id=message.id)
+				try: bot.copy_message(message.chat.id, msg.chat.id, msg.id,reply_to_message_id=None)
 				except:
 					if acc is None:
-						bot.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=message.id)
+						bot.send_message(message.chat.id,f"**String Session is not Set**", reply_to_message_id=None)
 						return
 					try: handle_private(message,username,msgid)
-					except Exception as e: bot.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=message.id)
+					except Exception as e: bot.send_message(message.chat.id,f"**Error** : __{e}__", reply_to_message_id=None)
 
 			# wait time
 			time.sleep(3)
